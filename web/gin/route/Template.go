@@ -24,7 +24,7 @@ func (st *showTemplate) getHtml(engine *gin.Engine) {
 	})
 
 	engine.GET("/back/goods", func(context *gin.Context) {
-		//src/Gin/templates/goods.html
+		//db/Gin/templates/goods.html
 		context.HTML(http.StatusOK, "back/goods.html", gin.H{
 			"user":    &domain.User{Name: "back goods数据", Addr: "DDs"},
 			"names":   []string{"a", "b", "c"},
@@ -34,13 +34,13 @@ func (st *showTemplate) getHtml(engine *gin.Engine) {
 		})
 	})
 	engine.GET("/font/news", func(context *gin.Context) {
-		//src/Gin/templates/goods.html
+		//db/Gin/templates/goods.html
 		context.HTML(http.StatusOK, "font/news.html", gin.H{
 			"user": &domain.User{Name: "font news数据", Addr: "/font/news"},
 		})
 	})
 	engine.GET("/font/head", func(context *gin.Context) {
-		//src/Gin/templates/goods.html
+		//db/Gin/templates/goods.html
 		context.HTML(http.StatusOK, "font/head.html", gin.H{
 			"us":   &domain.User{Name: "font news数据", Addr: "阿斯爱上的顿"},
 			"mode": "爱上是否",
