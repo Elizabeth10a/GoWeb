@@ -6,10 +6,13 @@
         <title>Title</title>
     </head>
 
-    {{/*  导入外部文件 数据流向 主--> 从
-css 从 -->主
+
+    {{/*  仅仅相当于把 文件代码复制过来 再解析
+     导入外部文件 数据流向 主--> 从
+        css 从 -->主
 */}}
-    {{template "pub/head.html" . }}
+    {{template "font/head.html" . }}
+    <h4>font/head.html-->back/goods. {{ .age}}  </h4> </br>
 
     <body>
 

@@ -1,6 +1,7 @@
-package main
+package tools
 
 import (
+	"GoWeb/web/domain"
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
@@ -15,19 +16,19 @@ func main() {
 		[username[:password]@][protocol[(address)]]/dbname[?param1=value1&...&paramN=valueN]
 		username:password@protocol(address)/dbname?param=value*/
 
-	db, err := sql.Open("mysql", "eliza:eliza@tcp(192.168.20.128:3306)/GO")
+	db, err := sql.Open("mysql", "eliza:eliza@tcp(192.168.20.130:3306)/Test")
 	if err != nil {
 		panic(err)
 	}
-	results, err := db.Query("SELECT * FROM GO.g_user")
+	results, err := db.Query("SELECT * FROM Test.User")
 	if err != nil {
 		panic(err.Error()) // proper error handling instead of panic in your app
 	}
-	user := User{Name: "sd", Age: 0}
+	user := domain.User{Name: "sd", Age: 0}
 	for results.Next() {
 		//fmt.Println(results.Columns())
 
-		err = results.Scan(&user.Name, &user.Age)
+		err = results.Scan(&user)
 		fmt.Println(user.Name, user.Age)
 	}
 }
