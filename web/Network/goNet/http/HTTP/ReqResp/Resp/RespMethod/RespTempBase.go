@@ -25,7 +25,7 @@ func (t *Temps) UseTemp1() {
 	http.HandleFunc("/UseTemp1", func(w http.ResponseWriter, r *http.Request) {
 
 		//解析模板文件
-		filePath := "Network/Protocol/HTTP/ReqResp/templates/tempBase.html"
+		filePath := "Network/netPackage/HTTP/ReqResp/templates/tempBase.html"
 
 		//Go会创建一个新的模板,只会返回一个模板,以第一个文件的文件名作为模板的名字，
 		//至于其他文件对应的模板则会被放到一个map 中。
@@ -56,8 +56,8 @@ func (t *Temps) UseTemp2() {
 		//解析模板文件
 		// t, _ := template.ParseFiles("index.html")
 		//通过Must函数让Go帮我们自动处理异常
-		filePath := "Network/Protocol/HTTP/ReqResp/templates/tempBase.html"
-		filePath2 := "Network/Protocol/HTTP/ReqResp/templates/tempBase2.html"
+		filePath := "Network/netPackage/HTTP/ReqResp/templates/tempBase.html"
+		filePath2 := "Network/netPackage/HTTP/ReqResp/templates/tempBase2.html"
 
 		temp := template.Must(template.ParseFiles(filePath, filePath2))
 		//执行

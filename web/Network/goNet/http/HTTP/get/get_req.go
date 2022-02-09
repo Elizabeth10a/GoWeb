@@ -17,8 +17,9 @@ func main() {
 	if err != nil {
 		fmt.Printf("parse url requestUrl failed, err:%v\n", err)
 	}
-	u.RawQuery = data.Encode() // URL encode
+	u.RawQuery = data.Encode() //W URL encode
 	fmt.Println(u.String())
+
 	resp, err := http.Get(u.String())
 	if err != nil {
 		fmt.Printf("post failed, err:%v\n", err)

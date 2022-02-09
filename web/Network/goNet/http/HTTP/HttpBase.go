@@ -15,72 +15,50 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
-func get(url string) {
+func httpPostGet(method, url, contentType, body string) {
 	resp, err := http.Get(url)
 
-	if err != nil {
-		panic(err)
+	switch method {
+	case http.MethodGet:
+		fmt.Println(http.MethodGet)
+
+		resp, err = http.Get(url)
+	case http.MethodPost:
+		//body io.Reader
+		fmt.Println(http.MethodPost)
+		resp, err = http.Post(url, contentType, strings.NewReader(body))
+	default:
+		resp, err = http.Get(url)
 
 	}
-	defer func() { _ = resp.Body.Close() }()
-	ra, err := ioutil.ReadAll(resp.Body)
+
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf(string(ra))
 
+	defer func() { resp.Body.Close() }()
+	showInfo(resp)
 }
-func post(url string) {
-	resp, err := http.Post(url, "", nil)
-
-	if err != nil {
-		panic(err)
-
-	}
-	defer func() { _ = resp.Body.Close() }()
-	ra, err := ioutil.ReadAll(resp.Body)
+func httpMethod(method, url string) {
+	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf(string(ra))
-
-}
-
-func put(url string) {
-	req, err := http.NewRequest(http.MethodPut, url, nil)
-	if err != nil {
-		panic(err)
-	}
-	do, err := http.DefaultClient.Do(req)
+	resp, err := http.DefaultClient.Do(req)
 
 	if err != nil {
 		return
 	}
 
-	defer func() { _ = do.Body.Close() }()
-	ra, err := ioutil.ReadAll(do.Body)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf(string(ra))
-
+	defer func() { resp.Body.Close() }()
+	showInfo(resp)
 }
 
-func del(url string) {
-	req, err := http.NewRequest(http.MethodDelete, url, nil)
-	if err != nil {
-		panic(err)
-	}
-	do, err := http.DefaultClient.Do(req)
-
-	if err != nil {
-		return
-	}
-
-	defer func() { _ = do.Body.Close() }()
-	ra, err := ioutil.ReadAll(do.Body)
+func showInfo(resp *http.Response) {
+	ra, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
@@ -89,71 +67,9 @@ func del(url string) {
 }
 func main() {
 	url := "http://httpbin.org/get"
-	url1 := "http://httpbin.org/put"
-	url2 := "http://httpbin.org/delete"
-	url3 := "http://httpbin.org/post"
-	//get(url)
-	//post(url)
-	get(url)
-	/*  "args": {},
-	  "headers": {
-	    "Accept-Encoding": "gzip",
-	    "Host": "httpbin.org",
-	    "User-Agent": "Go-http-client/1.1",
-	    "X-Amzn-Trace-Id": "Root=1-617aaa50-29227db93a3b0ea34f25d160"
-	  },
-	  "origin": "222.88.64.189",
-	  "url": "http://httpbin.org/get"
-	}*/
-	put(url1)
-	/*{
-	  "args": {},
-	  "data": "",
-	  "files": {},
-	  "form": {},
-	  "headers": {
-	    "Accept-Encoding": "gzip",
-	    "Content-Length": "0",
-	    "Host": "httpbin.org",
-	    "User-Agent": "Go-http-client/1.1",
-	    "X-Amzn-Trace-Id": "Root=1-617aaa50-0ce5239e5ed44a4953e26051"
-	  },
-	  "json": null,
-	  "origin": "222.88.64.189",
-	  "url": "http://httpbin.org/put"
-	}*/
-	del(url2)
-	/*{
-	  "args": {},
-	  "data": "",
-	  "files": {},
-	  "form": {},
-	  "headers": {
-	    "Accept-Encoding": "gzip",
-	    "Host": "httpbin.org",
-	    "User-Agent": "Go-http-client/1.1",
-	    "X-Amzn-Trace-Id": "Root=1-617aaa50-113214a62ca4fb7d7e15d0f9"
-	  },
-	  "json": null,
-	  "origin": "222.88.64.189",
-	  "url": "http://httpbin.org/delete"
-	}*/
-	post(url3)
-	/*{
-	    "args": {},
-	    "data": "",
-	    "files": {},
-	    "form": {},
-	    "headers": {
-	      "Accept-Encoding": "gzip",
-	      "Content-Length": "0",
-	      "Host": "httpbin.org",
-	      "User-Agent": "Go-http-client/1.1",
-	      "X-Amzn-Trace-Id": "Root=1-617aaa52-66e6d76454d3978542283dca"
-	    },
-	    "json": null,
-	    "origin": "222.88.64.189",
-	    "url": "http://httpbin.org/post"
-	  }
-	*/
+	//url1 := "http://httpbin.org/put"
+	//url2 := "http://httpbin.org/delete"
+	//url3 := "http://httpbin.org/post"
+	httpPostGet(http.MethodGet, url, "", "")
+
 }

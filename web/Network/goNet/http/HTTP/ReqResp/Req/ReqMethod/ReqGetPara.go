@@ -41,7 +41,3 @@ func getReqPare(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("Form表单中的username请求参数的值是：", req.PostFormValue("username"))
 
 }
-func (m *ReqHeader) GetReqPare() {
-	http.HandleFunc("/GetReqPare", getReqPare)
-
-}
